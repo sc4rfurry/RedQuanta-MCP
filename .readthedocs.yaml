@@ -24,6 +24,7 @@ build:
     post_install:
       - pip install poetry
       - VIRTUAL_ENV=$READTHEDOCS_VIRTUALENV_PATH poetry install --with docs --no-root
+      - npm install
     post_build:
       - npm run build:docs
 
