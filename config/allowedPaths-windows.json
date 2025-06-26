@@ -1,0 +1,83 @@
+{
+  "$schema": "./schemas/allowedPaths.schema.json",
+  "description": "Windows-specific allowed filesystem paths for RedQuanta MCP",
+  "version": "0.3.0",
+  "platform": "windows",
+  "jailRoot": "C:\\RedQuanta\\vol",
+  "jailRootAlternatives": [
+    "C:\\RedQuanta\\vol",
+    "C:\\Temp\\redquanta",
+    "%TEMP%\\redquanta",
+    "%USERPROFILE%\\AppData\\Local\\RedQuanta\\vol"
+  ],
+  "readOnlyByDefault": true,
+  "enforceCanonicalPaths": true,
+  "allowedExtensions": [
+    ".txt", ".json", ".xml", ".csv", ".log", ".md", ".yaml", ".yml",
+    ".conf", ".config", ".ini", ".properties", ".env",
+    ".html", ".htm", ".css", ".js", ".ts",
+    ".sql", ".db", ".sqlite", ".sqlite3",
+    ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx",
+    ".png", ".jpg", ".jpeg", ".gif", ".bmp", ".svg", ".ico",
+    ".zip", ".tar", ".gz", ".bz2", ".xz", ".7z",
+    ".pem", ".crt", ".key", ".p12", ".pfx"
+  ],
+  "deniedExtensions": [
+    ".exe", ".dll", ".sys", ".msi", ".bat", ".cmd", ".ps1", ".vbs", ".js",
+    ".scr", ".pif", ".com", ".cpl", ".msc", ".jar", ".class", ".war", ".ear",
+    ".sh", ".bash", ".zsh", ".fish", ".csh", ".tcsh",
+    ".py", ".rb", ".pl", ".php", ".jsp", ".asp", ".aspx",
+    ".bin", ".run", ".app", ".deb", ".rpm", ".dmg", ".pkg",
+    ".so", ".dylib", ".a", ".lib", ".o", ".obj"
+  ],
+  "allowedDirectories": [
+    "tmp", "temp", "reports", "uploads", "downloads", "wordlists", "payloads",
+    "output", "results", "logs", "config", "data", "backup", "archive",
+    "scan-results", "nmap-results", "masscan-results", "ffuf-results", 
+    "nikto-results", "hydra-results", "tools", "scripts", "plugins"
+  ],
+  "maxFileSize": "100MB",
+  "maxTotalSize": "1GB",
+  "windowsSpecific": {
+    "allowedDrives": ["C:", "D:", "E:", "F:"],
+    "allowUNCPaths": false,
+    "allowNetworkDrives": false,
+    "respectNTFSPermissions": true,
+    "allowHiddenFiles": false,
+    "allowSystemFiles": false,
+    "pathSeparator": "\\",
+    "caseSensitive": false,
+    "maxPathLength": 260,
+    "reservedNames": [
+      "CON", "PRN", "AUX", "NUL",
+      "COM1", "COM2", "COM3", "COM4", "COM5", "COM6", "COM7", "COM8", "COM9",
+      "LPT1", "LPT2", "LPT3", "LPT4", "LPT5", "LPT6", "LPT7", "LPT8", "LPT9"
+    ]
+  },
+  "auditLogging": {
+    "enabled": true,
+    "logPath": "logs\\filesystem-audit-windows.jsonl",
+    "logRotation": {
+      "enabled": true,
+      "maxFiles": 7,
+      "maxSize": "10MB"
+    }
+  },
+  "security": {
+    "blockPathTraversal": true,
+    "blockSymlinks": true,
+    "blockJunctions": true,
+    "blockHardlinks": true,
+    "requireDangerousFlag": [
+      "write", "delete", "execute", "modify", "create"
+    ],
+    "scanForMalware": false,
+    "checksumValidation": true
+  },
+  "performance": {
+    "cacheStats": true,
+    "cacheDuration": "5m",
+    "maxConcurrentOps": 10,
+    "timeoutMs": 30000
+  }
+} 

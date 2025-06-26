@@ -1,0 +1,266 @@
+{
+  "version": "0.3.0",
+  "name": "redquanta-mcp",
+  "description": "Cross-platform, security-hardened MCP server for penetration testing orchestration",
+  "author": "RedQuanta Team",
+  "license": "MIT",
+  "homepage": "https://github.com/redquanta/redquanta-mcp",
+  "schema_version": "2024-11-05",
+  "capabilities": {
+    "tools": true,
+    "resources": true,
+    "prompts": false,
+    "logging": true
+  },
+  "tools": [
+    {
+      "name": "nmap_scan",
+      "description": "Advanced network discovery and security scanning with Nmap",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "target": { "type": "string", "description": "Target IP, hostname, or CIDR range" },
+          "ports": { "type": "string", "description": "Port specification (e.g., '1-1000', 'top-ports 100')" },
+          "profile": { "type": "string", "enum": ["default", "aggressive", "stealth"], "default": "default" },
+          "output_format": { "type": "string", "enum": ["xml", "json", "gnmap"], "default": "xml" },
+          "dangerous": { "type": "boolean", "default": false, "description": "Enable potentially disruptive scans" }
+        },
+        "required": ["target"]
+      }
+    },
+    {
+      "name": "masscan_scan",
+      "description": "High-speed port scanner for large-scale network reconnaissance",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "target": { "type": "string", "description": "Target IP range or CIDR" },
+          "ports": { "type": "string", "default": "1-65535", "description": "Port range to scan" },
+          "rate": { "type": "number", "default": 10000, "description": "Packets per second" },
+          "output_format": { "type": "string", "enum": ["xml", "json", "list"], "default": "xml" }
+        },
+        "required": ["target"]
+      }
+    },
+    {
+      "name": "ffuf_fuzz",
+      "description": "Fast web fuzzing for directory and file discovery",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "url": { "type": "string", "description": "Target URL with FUZZ keyword" },
+          "wordlist": { "type": "string", "description": "Path to wordlist file" },
+          "threads": { "type": "number", "default": 200, "description": "Number of threads" },
+          "filter_codes": { "type": "string", "default": "403,404", "description": "HTTP status codes to filter" },
+          "extensions": { "type": "string", "description": "File extensions to append" }
+        },
+        "required": ["url", "wordlist"]
+      }
+    },
+    {
+      "name": "gobuster_scan",
+      "description": "Directory and DNS enumeration tool",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "mode": { "type": "string", "enum": ["dir", "dns", "vhost"], "default": "dir" },
+          "target": { "type": "string", "description": "Target URL or domain" },
+          "wordlist": { "type": "string", "description": "Path to wordlist file" },
+          "threads": { "type": "number", "default": 100, "description": "Number of threads" },
+          "extensions": { "type": "string", "description": "File extensions (e.g., 'php,html,js')" }
+        },
+        "required": ["target", "wordlist"]
+      }
+    },
+    {
+      "name": "nikto_scan",
+      "description": "Web vulnerability scanner for identifying security issues",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "target": { "type": "string", "description": "Target URL or IP" },
+          "port": { "type": "number", "description": "Target port" },
+          "ssl": { "type": "boolean", "default": false, "description": "Use SSL/TLS" },
+          "maxtime": { "type": "number", "default": 300, "description": "Maximum scan time in seconds" }
+        },
+        "required": ["target"]
+      }
+    },
+    {
+      "name": "sqlmap_test",
+      "description": "Automated SQL injection testing and exploitation",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "url": { "type": "string", "description": "Target URL" },
+          "data": { "type": "string", "description": "POST data for testing" },
+          "cookie": { "type": "string", "description": "Cookie string" },
+          "level": { "type": "number", "default": 5, "description": "Test level (1-5)" },
+          "risk": { "type": "number", "default": 3, "description": "Risk level (1-3)" },
+          "dangerous": { "type": "boolean", "default": false, "description": "Enable potentially destructive tests" }
+        },
+        "required": ["url"]
+      }
+    },
+    {
+      "name": "john_crack",
+      "description": "Password cracking with John the Ripper",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "hash_file": { "type": "string", "description": "Path to hash file" },
+          "wordlist": { "type": "string", "description": "Path to wordlist file" },
+          "format": { "type": "string", "description": "Hash format (e.g., 'raw-md5', 'bcrypt')" },
+          "rules": { "type": "string", "description": "Rules to apply" },
+          "dangerous": { "type": "boolean", "default": false, "description": "Required for password cracking operations" }
+        },
+        "required": ["hash_file", "dangerous"]
+      }
+    },
+    {
+      "name": "hydra_bruteforce",
+      "description": "Network service brute force attacks",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "target": { "type": "string", "description": "Target IP or hostname" },
+          "service": { "type": "string", "description": "Service to attack (ssh, ftp, http, etc.)" },
+          "port": { "type": "number", "description": "Target port" },
+          "userlist": { "type": "string", "description": "Path to username list" },
+          "passlist": { "type": "string", "description": "Path to password list" },
+          "threads": { "type": "number", "default": 64, "description": "Number of threads" },
+          "dangerous": { "type": "boolean", "default": false, "description": "Required for brute force operations" }
+        },
+        "required": ["target", "service", "userlist", "passlist", "dangerous"]
+      }
+    },
+    {
+      "name": "workflow_enum",
+      "description": "Automated enumeration workflow combining multiple tools",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "target": { "type": "string", "description": "Target IP, hostname, or CIDR range" },
+          "scope": { "type": "string", "enum": ["network", "web", "full"], "default": "network" },
+          "depth": { "type": "string", "enum": ["light", "normal", "deep"], "default": "normal" },
+          "coaching": { "type": "string", "enum": ["beginner", "advanced"], "default": "beginner" }
+        },
+        "required": ["target"]
+      }
+    },
+    {
+      "name": "workflow_scan",
+      "description": "Comprehensive vulnerability scanning workflow",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "target": { "type": "string", "description": "Target from enumeration phase" },
+          "services": { "type": "array", "items": { "type": "string" }, "description": "Discovered services to scan" },
+          "aggressive": { "type": "boolean", "default": false, "description": "Enable aggressive scanning" },
+          "coaching": { "type": "string", "enum": ["beginner", "advanced"], "default": "beginner" }
+        },
+        "required": ["target"]
+      }
+    },
+    {
+      "name": "workflow_exploit",
+      "description": "Automated exploitation attempts (requires --dangerous flag)",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "target": { "type": "string", "description": "Target from scan phase" },
+          "vulns": { "type": "array", "items": { "type": "string" }, "description": "Identified vulnerabilities" },
+          "dangerous": { "type": "boolean", "default": false, "description": "Required for exploitation attempts" },
+          "coaching": { "type": "string", "enum": ["beginner", "advanced"], "default": "beginner" }
+        },
+        "required": ["target", "vulns", "dangerous"]
+      }
+    },
+    {
+      "name": "workflow_report",
+      "description": "Generate comprehensive engagement report",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "engagement_id": { "type": "string", "description": "Unique engagement identifier" },
+          "format": { "type": "string", "enum": ["markdown", "json", "both"], "default": "both" },
+          "include_raw": { "type": "boolean", "default": false, "description": "Include raw tool outputs" }
+        },
+        "required": ["engagement_id"]
+      }
+    },
+    {
+      "name": "filesystem_list",
+      "description": "List directory contents within jailed filesystem",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": { "type": "string", "default": "/", "description": "Path to list (relative to jail root)" },
+          "recursive": { "type": "boolean", "default": false, "description": "List recursively" },
+          "show_hidden": { "type": "boolean", "default": false, "description": "Show hidden files" }
+        }
+      }
+    },
+    {
+      "name": "filesystem_read",
+      "description": "Read file contents within jailed filesystem",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": { "type": "string", "description": "File path to read (relative to jail root)" },
+          "encoding": { "type": "string", "enum": ["utf8", "base64", "hex"], "default": "utf8" },
+          "max_size": { "type": "number", "default": 1048576, "description": "Maximum file size in bytes" }
+        },
+        "required": ["path"]
+      }
+    },
+    {
+      "name": "filesystem_write",
+      "description": "Write file contents within jailed filesystem (requires --dangerous)",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "path": { "type": "string", "description": "File path to write (relative to jail root)" },
+          "content": { "type": "string", "description": "Content to write" },
+          "encoding": { "type": "string", "enum": ["utf8", "base64"], "default": "utf8" },
+          "dangerous": { "type": "boolean", "default": false, "description": "Required for write operations" }
+        },
+        "required": ["path", "content", "dangerous"]
+      }
+    },
+    {
+      "name": "command_run",
+      "description": "Execute allowed commands with argument sanitization",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "command": { "type": "string", "description": "Command to execute (must be in allowlist)" },
+          "args": { "type": "array", "items": { "type": "string" }, "description": "Command arguments" },
+          "timeout": { "type": "number", "default": 300, "description": "Timeout in seconds" },
+          "dangerous": { "type": "boolean", "default": false, "description": "Required for potentially dangerous commands" }
+        },
+        "required": ["command"]
+      }
+    }
+  ],
+  "resources": [
+    {
+      "uri": "config://allowedCommands",
+      "name": "Allowed Commands Configuration",
+      "description": "List of commands allowed for execution",
+      "mimeType": "application/json"
+    },
+    {
+      "uri": "config://allowedPaths",
+      "name": "Allowed Paths Configuration", 
+      "description": "List of paths allowed for filesystem operations",
+      "mimeType": "application/json"
+    },
+    {
+      "uri": "logs://audit",
+      "name": "Audit Logs",
+      "description": "Security audit logs in JSONL format",
+      "mimeType": "application/x-ndjson"
+    }
+  ]
+} 

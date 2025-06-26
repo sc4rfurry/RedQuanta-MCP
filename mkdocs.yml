@@ -1,0 +1,214 @@
+site_name: RedQuanta MCP
+site_description: Production-Ready Penetration Testing MCP Server
+site_author: RedQuanta Security Team
+site_url: https://redquanta-mcp.readthedocs.io/
+
+# Repository information
+repo_name: RedQuanta-MCP
+repo_url: https://github.com/sc4rfurry/RedQuanta-MCP
+edit_uri: edit/main/docs/
+
+# Copyright
+copyright: Copyright &copy; 2025 RedQuanta Security Team
+
+# Configuration
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.path
+    - navigation.top
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: red
+      accent: deep orange
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: red
+      accent: deep orange
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  font:
+    text: Inter
+    code: JetBrains Mono
+  logo: assets/redquanta-logo.svg
+  favicon: assets/favicon.png
+
+# Plugins
+plugins:
+  - search:
+      lang: en
+  - minify:
+      minify_html: true
+      minify_js: true
+      minify_css: true
+      htmlmin_opts:
+        remove_comments: true
+
+# Customization
+extra:
+  analytics:
+    provider: google
+    property: !ENV GOOGLE_ANALYTICS_KEY
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/sc4rfurry/RedQuanta-MCP
+    - icon: fontawesome/brands/docker
+      link: https://hub.docker.com/r/redquanta/mcp
+  consent:
+    title: Cookie consent
+    description: >- 
+      We use cookies to recognize your repeated visits and preferences, as well
+      as to measure the effectiveness of our documentation and whether users
+      find what they're searching for. With your consent, you're helping us to
+      make our documentation better.
+
+# Extensions
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: sc4rfurry
+      repo: RedQuanta-MCP
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+# Page tree
+nav:
+  - Home: index.md
+  - Getting Started:
+    - Quick Start: getting-started/quick-start.md
+    - Installation: getting-started/installation.md
+    - First Scan: getting-started/first-scan.md
+    - Configuration: getting-started/configuration.md
+  - User Guide:
+    - Overview: user-guide/overview.md
+    - CLI Interface: user-guide/cli.md
+    - REST API: user-guide/rest-api.md
+    - MCP Protocol: user-guide/mcp-protocol.md
+    - Understanding Results: user-guide/understanding-results.md
+    - Beginner Guide: usage/BEGINNER_GUIDE.md
+  - Tools:
+    - Overview: tools/overview.md
+    - Network Tools:
+      - Nmap: tools/network/nmap.md
+      - Masscan: tools/network/masscan.md
+    - Web Tools:
+      - Ffuf: tools/web/ffuf.md
+      - Nikto: tools/web/nikto.md
+    - Password Tools:
+      - Hydra: tools/password/hydra.md
+    - Intelligence:
+      - Web Search: tools/intelligence/web-search.md
+    - Workflows:
+      - Enumeration: tools/workflows/enumeration.md
+      - Vulnerability Assessment: tools/workflows/vulnerability.md
+  - Examples:
+    - Basic Scanning: examples/basic-scanning.md
+    - Common Workflows: examples/common-workflows.md
+    - Advanced Workflows: examples/advanced-workflows.md
+    - LLM Usage Guide: examples/LLM_USAGE_GUIDE.md
+  - API:
+    - REST API: api/REST_API.md
+    - MCP Protocol: api/MCP_PROTOCOL.md
+    - OpenAPI Spec: api/openapi.md
+  - Security:
+    - Security Model: security/model.md
+    - Legal & Ethics: security/legal-ethics.md
+    - Command Validation: security/command-validation.md
+    - Audit Logging: security/audit-logging.md
+    - Jailed Execution: security/jailed-execution.md
+    - Security Model (Legacy): security/SECURITY_MODEL.md
+  - Development:
+    - Architecture: development/architecture.md
+    - Plugin Development: development/plugin-development.md
+    - Performance: development/performance.md
+    - Contributing: development/contributing.md
+    - Plugin Development (Legacy): development/PLUGIN_DEVELOPMENT.md
+  - Deployment:
+    - Overview: DEPLOYMENT.md
+    - Docker: deployment/docker.md
+    - Monitoring: deployment/monitoring.md
+    - Troubleshooting: deployment/troubleshooting.md
+  - Tutorials:
+    - Enterprise Setup: tutorials/enterprise-setup.md
+    - CI/CD Integration: tutorials/cicd-integration.md
+  - Testing:
+    - Overview: testing/overview.md
+    - Unit Tests: testing/unit-tests.md
+  - Reference:
+    - Beginner Usage: USAGE_beginner.md
+    - Advanced Usage: USAGE_advanced.md
+    - API Reference: API.md
+  - Troubleshooting:
+    - API Issues: troubleshooting/API.md
+    - Linux Issues: troubleshooting/LINUX.md
+    - Installation Issues: troubleshooting/INSTALLATION.md
+  - Installation:
+    - Linux Setup: installation/SETUP_LINUX.md
+    - Windows Setup: SETUP_WINDOWS.md
+
+# Watch paths for auto-reload during development
+watch:
+  - docs/
+  - mkdocs.yml
+  - src/
+
+# Validation
+validation:
+  absolute_links: warn
+  unrecognized_links: warn
+  anchors: warn
+
+# Custom assets (commented out to prevent 404s)
+# extra_css:
+#   - assets/stylesheets/extra.css
+
+# extra_javascript:
+#   - assets/javascripts/mathjax.js
+#   - https://polyfill.io/v3/polyfill.min.js?features=es6
+#   - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js 

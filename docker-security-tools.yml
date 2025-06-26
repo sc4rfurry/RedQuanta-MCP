@@ -1,0 +1,107 @@
+services:
+  # All-in-one security tools container
+  security-tools:
+    image: kalilinux/kali-rolling:latest
+    container_name: redquanta-security-tools
+    volumes:
+      - ./vol:/opt/redquanta/vol
+      - ./vol/results:/results
+      - ./vol/wordlists:/wordlists
+    working_dir: /opt/redquanta
+    networks:
+      - security-net
+    command: |
+      bash -c "
+        echo '🔧 Installing security tools...'
+        apt-get update -qq
+        apt-get install -y -qq masscan ffuf nikto nmap sqlmap hydra john gobuster dirb curl wget whois openssl subfinder
+        echo '✅ Security tools installed'
+        echo '🔧 Installing wordlists...'
+        apt-get install -y -qq dirb dirbuster seclists wordlists
+        mkdir -p /usr/share/wordlists/dirb
+        mkdir -p /usr/share/wordlists/dirbuster
+        # Copy dirb wordlists to expected locations
+        if [ -d /usr/share/dirb/wordlists ]; then
+          cp -r /usr/share/dirb/wordlists/* /usr/share/wordlists/dirb/ 2>/dev/null || true
+        fi
+        # Create common.txt if it doesn't exist
+        if [ ! -f /usr/share/wordlists/dirb/common.txt ]; then
+          curl -s -o /usr/share/wordlists/dirb/common.txt https://raw.githubusercontent.com/v0re/dirb/master/wordlists/common.txt || 
+          echo -e 'admin\ntest\nindex\nlogin\nconfig\nphpinfo\nreadme' > /usr/share/wordlists/dirb/common.txt
+        fi
+        # Create big.txt wordlist
+        if [ ! -f /usr/share/wordlists/dirb/big.txt ]; then
+          curl -s -o /usr/share/wordlists/dirb/big.txt https://raw.githubusercontent.com/v0re/dirb/master/wordlists/big.txt || 
+          curl -s -o /usr/share/wordlists/dirb/big.txt https://raw.githubusercontent.com/danielmiessler/SecLists/master/Discovery/Web-Content/directory-list-2.3-medium.txt
+        fi
+        echo '✅ Wordlists installed'
+        echo '🔍 Tool versions:'
+        masscan --version 2>/dev/null || echo 'masscan: installed'
+        ffuf -V 2>/dev/null || echo 'ffuf: installed'  
+        nikto -Version 2>/dev/null | head -1 || echo 'nikto: installed'
+        echo '📚 Wordlists available:'
+        ls -la /usr/share/wordlists/dirb/ 2>/dev/null || echo 'Creating basic wordlists...'
+        echo '🚀 Security tools container ready!'
+        tail -f /dev/null
+      "
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    privileged: true
+
+  # Lightweight tools container for basic operations  
+  security-tools-alpine:
+    image: alpine:latest
+    container_name: redquanta-tools-alpine
+    volumes:
+      - ./vol:/opt/redquanta/vol
+    working_dir: /opt/redquanta
+    networks:
+      - security-net
+    command: |
+      sh -c "
+        echo '🔧 Installing Alpine tools...'
+        apk add --no-cache curl wget nmap-ncat bind-tools
+        echo '✅ Alpine tools ready!'
+        tail -f /dev/null
+      "
+    restart: unless-stopped
+
+  # Web application for testing
+  test-webapp:
+    image: vulnerables/web-dvwa:latest
+    container_name: redquanta-test-webapp
+    ports:
+      - "8080:80"
+    networks:
+      - security-net
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=dvwa
+      - MYSQL_USER=dvwa
+      - MYSQL_PASSWORD=password
+    restart: unless-stopped
+
+  # Simple HTTP server for testing
+  test-http:
+    image: nginx:alpine
+    container_name: redquanta-test-http
+    ports:
+      - "8081:80"
+    networks:
+      - security-net
+    volumes:
+      - ./vol/test-content:/usr/share/nginx/html:ro
+    restart: unless-stopped
+
+networks:
+  security-net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+volumes:
+  security-data:
+    driver: local 

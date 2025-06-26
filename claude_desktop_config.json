@@ -1,0 +1,25 @@
+{
+  "mcpServers": {
+    "redquanta-mcp": {
+      "command": "node",
+      "args": ["D:\\z0\\RedQuanta-MCP\\dist\\server.js"],
+      "cwd": "D:\\z0\\RedQuanta-MCP",
+      "env": {
+        "NODE_ENV": "production",
+        "MCP_MODE": "stdio",
+        "MCP_LOG_LEVEL": "info",
+        "LOG_LEVEL": "info",
+        "WEB_SEARCH_ENABLED": "true",
+        "CACHE_ENABLED": "true",
+        "CACHE_TTL": "600",
+        "DANGEROUS_MODE": "true",
+        "DOCKER_ENABLED": "true",
+        "JAIL_ROOT": "D:\\z0\\RedQuanta-MCP\\vol",
+        "REAL_EXECUTION": "true",
+        "SIMULATION_MODE": "false",
+        "NODE_OPTIONS": "--max-old-space-size=2048",
+        "UV_THREADPOOL_SIZE": "4"
+      }
+    }
+  }
+}

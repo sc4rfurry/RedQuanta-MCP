@@ -1,0 +1,141 @@
+/* RedQuanta MCP Custom Styles */
+
+:root {
+  --redquanta-primary: #d32f2f;
+  --redquanta-secondary: #f57c00;
+  --redquanta-dark: #1a1a1a;
+  --redquanta-light: #f5f5f5;
+  --redquanta-accent: #ff5722;
+}
+
+/* Enhanced branding */
+.md-header {
+  background: linear-gradient(135deg, var(--redquanta-primary), var(--redquanta-secondary));
+}
+
+.md-header__title {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+/* Custom navigation styling */
+.md-nav__link--active {
+  color: var(--redquanta-primary) !important;
+  font-weight: 600;
+}
+
+.md-nav__link:hover {
+  color: var(--redquanta-secondary);
+}
+
+/* Code blocks styling */
+.highlight .hll {
+  background-color: rgba(255, 87, 34, 0.1);
+}
+
+/* Admonition styling */
+.md-typeset .admonition.warning {
+  border-color: var(--redquanta-secondary);
+}
+
+.md-typeset .admonition.danger {
+  border-color: var(--redquanta-primary);
+}
+
+/* Custom buttons */
+.md-button {
+  background: linear-gradient(135deg, var(--redquanta-primary), var(--redquanta-secondary));
+  border: none;
+  border-radius: 6px;
+  padding: 0.6em 1.2em;
+  color: white;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.md-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
+}
+
+/* Copy button styling */
+.md-clipboard {
+  color: var(--redquanta-primary);
+}
+
+.md-clipboard:hover {
+  color: var(--redquanta-secondary);
+}
+
+/* Search styling */
+.md-search__form {
+  border-radius: 8px;
+}
+
+.md-search__input {
+  border-radius: 8px;
+}
+
+/* Table styling */
+.md-typeset table:not([class]) {
+  border: 1px solid rgba(211, 47, 47, 0.2);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.md-typeset table:not([class]) th {
+  background: linear-gradient(135deg, var(--redquanta-primary), var(--redquanta-secondary));
+  color: white;
+  font-weight: 600;
+}
+
+/* Footer styling */
+.md-footer {
+  background: var(--redquanta-dark);
+}
+
+/* Responsive improvements */
+@media screen and (max-width: 768px) {
+  .md-header__title {
+    font-size: 1.1rem;
+  }
+  
+  .md-button {
+    padding: 0.5em 1em;
+    font-size: 0.9rem;
+  }
+}
+
+/* Animation for loading */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.md-content {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Code highlighting improvements */
+.highlight .k { color: var(--redquanta-primary); }
+.highlight .s { color: var(--redquanta-secondary); }
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--redquanta-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--redquanta-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--redquanta-secondary);
+}

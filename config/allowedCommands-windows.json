@@ -1,0 +1,198 @@
+{
+  "allowed": {
+    "nmap": {
+      "path": "nmap",
+      "minVersion": "7.95",
+      "allowedArgs": [
+        "-sS", "-sT", "-sU", "-sV", "-sC", "-sn", "-p", "-T0", "-T1", "-T2", "-T3", "-T4", "-T5",
+        "--host-timeout", "--max-rate", "--min-rate", "--reason", "-v", "-vv", "-d", "-dd",
+        "-oN", "-oX", "-oG", "-oA", "--open", "--top-ports", "--port-ratio", "-6",
+        "--script", "--script-args", "--script-help", "--script-trace", "--script-updatedb",
+        "-O", "-A", "--osscan-limit", "--osscan-guess", "--version-intensity", "--version-light",
+        "--version-all", "--version-trace", "-f", "--mtu", "-D", "-S", "-e", "-g", "--source-port",
+        "--data", "--data-string", "--data-length", "--ip-options", "--ttl", "--randomize-hosts",
+        "--spoof-mac", "--send-eth", "--send-ip", "--privileged", "--unprivileged", "--exclude",
+        "--excludefile", "--iflist", "--packet-trace", "--resume", "--datadir", "--servicedb",
+        "--versiondb", "--dns-servers", "--system-dns", "--traceroute"
+      ],
+      "dangerousArgs": [
+        "--script", "-O", "-A", "--osscan-limit", "--osscan-guess", "--send-eth", "--send-ip",
+        "--privileged", "-f", "--mtu", "-D", "-S", "--spoof-mac", "--data", "--data-string"
+      ],
+      "requiresDangerous": false
+    },
+    "masscan": {
+      "path": "masscan",
+      "minVersion": "1.3.2",
+      "allowedArgs": [
+        "-p", "-p*", "--ports", "--range", "--rate", "--banners", "-c", "--conf", "--resume",
+        "--resume-index", "--resume-count", "-e", "--adapter", "--adapter-ip", "--adapter-port",
+        "--adapter-mac", "--router-mac", "--ping", "--append-output", "--iflist", "--retries",
+        "--nmap", "--pcap-payloads", "--pcap-filename", "--read", "--echo", "--output-format",
+        "--output-filename", "--rotate", "--rotate-dir", "--seed", "--regress", "--ttl",
+        "--wait", "--offline", "--shard", "--shards", "--capture", "--nocapture", "--packet-trace",
+        "--pfring", "--sendq", "--nobacktrace", "--min-packet"
+      ],
+      "dangerousArgs": [
+        "--banners", "--router-mac", "--adapter-mac", "--echo", "--offline"
+      ],
+      "requiresDangerous": false
+    },
+    "ffuf": {
+      "path": "ffuf",
+      "minVersion": "2.0",
+      "allowedArgs": [
+        "-w", "-u", "-t", "-p", "-H", "-X", "-b", "-d", "-r", "-c", "-l", "-s", "-fs", "-fl",
+        "-fw", "-fh", "-fc", "-ft", "-fr", "-sf", "-sl", "-sw", "-sh", "-sc", "-st", "-sr",
+        "-ac", "-acc", "-ach", "-acl", "-acs", "-afc", "-afl", "-afw", "-afh", "-e", "-o",
+        "-of", "-od", "-or", "-ic", "-tc", "-k", "-se", "-timeout", "-rate", "-maxtime",
+        "-maxtime-job", "-delay", "-recursion", "-recursion-depth", "-replay-proxy", "-x",
+        "-noninteractive", "-cookie", "-cookiejar", "-v", "-mc", "-ml", "-ms", "-mh", "-mr",
+        "-mt", "-ignore-body", "-debug-log", "-input-cmd", "-request", "-request-proto",
+        "-mode", "-stop-on-errors", "-stop-on-all", "-json", "-config", "-autocalibration",
+        "-autocalibration-keyword", "-autocalibration-strategy", "-scraperheaders",
+        "-scrapertime", "-scraperstatus", "-scraperrecursion"
+      ],
+      "dangerousArgs": [
+        "-replay-proxy", "-input-cmd", "-request", "-debug-log"
+      ],
+      "requiresDangerous": false
+    },
+    "nikto": {
+      "path": "nikto.pl",
+      "minVersion": "3.0",
+      "allowedArgs": [
+        "-h", "-p", "-ssl", "-nossl", "-root", "-404code", "-404string", "-C", "-cgidirs",
+        "-dbcheck", "-Display", "-evasion", "-Format", "-Help", "-host", "-id", "-list-plugins",
+        "-maxtime", "-mutate", "-mutate-options", "-nolookup", "-noslash", "-nointeractive",
+        "-output", "-Pause", "-Plugins", "-port", "-root", "-Save", "-ssl", "-timeout",
+        "-Tuning", "-until", "-update", "-useproxy", "-Version", "-vhost"
+      ],
+      "dangerousArgs": [
+        "-evasion", "-mutate", "-Plugins", "-useproxy"
+      ],
+      "requiresDangerous": false
+    },
+    "hydra": {
+      "path": "hydra",
+      "minVersion": "9.5",
+      "allowedArgs": [
+        "-l", "-L", "-p", "-P", "-e", "-u", "-C", "-M", "-o", "-b", "-f", "-F", "-t", "-T",
+        "-w", "-W", "-c", "-v", "-V", "-d", "-q", "-x", "-y", "-z", "-s", "-S", "-O", "-R",
+        "-m", "-I", "-K", "-a", "-n", "-N", "-g", "-G", "-i", "-j", "-k", "-r"
+      ],
+      "dangerousArgs": [
+        "-M", "-R", "-I", "-K"
+      ],
+      "requiresDangerous": false
+    },
+    "py": {
+      "path": "py",
+      "script": "sqlmap.py",
+      "minVersion": "1.8",
+      "allowedArgs": [
+        "-3", "-u", "--url", "--data", "--cookie", "--headers", "--method", "--delay", "--timeout",
+        "--retries", "--randomize", "--safe-url", "--safe-post", "--safe-headers", "--safe-freq",
+        "--skip-urlencode", "--csrf-token", "--csrf-url", "--force-ssl", "--hpp", "--eval",
+        "--batch", "--charset", "--crawl", "--csv-del", "--dump-format", "--encoding", "--eta",
+        "--flush-session", "--forms", "--fresh-queries", "--hex", "--output-dir", "--parse-errors",
+        "--preprocess", "--postprocess", "--repair", "--save", "--scope", "--skip", "--skip-static",
+        "--smart", "--sqlmap-shell", "--table-prefix", "--test-filter", "--test-skip", "--web-root"
+      ],
+      "dangerousArgs": [
+        "--os-shell", "--os-pwn", "--priv-esc", "--msf-path", "--tmp-path", "--reg-read",
+        "--reg-add", "--reg-del", "--reg-key", "--reg-value", "--reg-data", "--reg-type"
+      ],
+      "requiresDangerous": true
+    },
+    "john": {
+      "path": "john",
+      "minVersion": "1.9.0-jumbo",
+      "allowedArgs": [
+        "--wordlist", "--rules", "--incremental", "--external", "--stdout", "--restore",
+        "--session", "--status", "--show", "--test", "--users", "--groups", "--shells",
+        "--salts", "--format", "--list", "--subformat", "--make-charset", "--markov",
+        "--prince", "--loopback", "--mem-file-size", "--field-separator-char", "--fix-state-delay",
+        "--idle", "--save-memory", "--node", "--fork", "--pot", "--nolog", "--log-stderr",
+        "--verbosity", "--no-log", "--bare", "--config", "--help"
+      ],
+      "dangerousArgs": [],
+      "requiresDangerous": true
+    },
+    "docker": {
+      "path": "docker",
+      "allowedArgs": [
+        "run", "--rm", "-i", "--network", "--volume", "--workdir", "--user", "--read-only",
+        "--tmpfs", "--cap-drop", "--cap-add", "--security-opt", "--no-new-privileges"
+      ],
+      "dangerousArgs": ["--privileged", "--pid=host", "--net=host"],
+      "requiresDangerous": false
+    },
+    "wsl": {
+      "path": "wsl",
+      "allowedArgs": [
+        "-d", "--distribution", "-u", "--user", "-e", "--exec", "--", "nmap", "masscan", 
+        "ffuf", "gobuster", "nikto", "sqlmap", "john", "hydra"
+      ],
+      "dangerousArgs": [],
+      "requiresDangerous": false
+    },
+    "ping": {
+      "path": "ping",
+      "allowedArgs": ["-t", "-n", "-l", "-f", "-i", "-v", "-r", "-s", "-j", "-k", "-w", "-R", "-S", "-4", "-6"],
+      "dangerousArgs": [],
+      "requiresDangerous": false
+    },
+    "nslookup": {
+      "path": "nslookup",
+      "allowedArgs": ["-type", "-class", "-debug", "-d2", "-domain", "-srchlist", "-port", "-timeout", "-retry"],
+      "dangerousArgs": [],
+      "requiresDangerous": false
+    },
+    "gobuster": {
+      "path": "gobuster",
+      "minVersion": "3.0",
+      "allowedArgs": [
+        "dir", "dns", "vhost", "fuzz", "-u", "-w", "-t", "-x", "-s", "-b", "-k", "-n", "-r", "-e", "-a",
+        "-p", "-c", "-l", "-q", "-v", "-o", "-f", "-d", "-m", "--wildcard", "--append-domain", "--domain",
+        "--subdomain", "--no-status", "--no-error", "--timeout", "--delay", "--random-agent", "--proxy",
+        "--pattern", "--no-banner", "--useragent", "--username", "--password", "--include-length",
+        "--exclude-length", "--status-codes", "--status-codes-blacklist", "--follow-redirect",
+        "--expanded", "--hide-length"
+      ],
+      "dangerousArgs": [
+        "--proxy", "--username", "--password"
+      ],
+      "requiresDangerous": false
+    }
+  },
+  "denied": {
+    "patterns": [
+      "rm\\s+-rf",
+      "del\\s+/[qsf]",
+      "format\\s+[A-Z]:",
+      "deltree",
+      "shutdown",
+      "restart",
+      "logoff",
+      "powercfg",
+      "bcdedit",
+      "diskpart",
+      "reg\\s+delete",
+      "reg\\s+add",
+      "net\\s+user",
+      "net\\s+localgroup"
+    ],
+    "commands": [
+      "del", "erase", "rmdir", "rd", "format", "fdisk", "diskpart", "bcdedit",
+      "shutdown", "restart", "logoff", "powercfg", "schtasks", "at", "sc",
+      "net", "netsh", "reg", "regedit", "gpedit.msc", "secpol.msc", "lusrmgr.msc",
+      "cmd", "powershell", "powershell_ise", "wscript", "cscript", "mshta",
+      "rundll32", "regsvr32", "certlm", "certmgr", "mmc", "compmgmt.msc",
+      "python", "perl", "ruby", "node", "php", "java", "javac", "cl", "link",
+      "devenv", "msbuild", "nmake", "cmake", "make", "gcc", "g++",
+      "telnet", "ftp", "tftp", "ssh", "scp", "pscp", "plink", "putty",
+      "wget", "curl", "bitsadmin", "certutil", "nc", "ncat", "netcat"
+    ]
+  }
+} 

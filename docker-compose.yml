@@ -1,0 +1,97 @@
+version: '3.8'
+
+services:
+  redquanta-mcp:
+    build: .
+    container_name: redquanta-mcp
+    ports:
+      - "5891:5891"
+    environment:
+      - NODE_ENV=production
+      - MCP_MODE=rest
+      - MCP_PORT=5891  
+      - JAIL_ROOT=/opt/redquanta/vol
+      - LOG_LEVEL=info
+      - TELEMETRY_ENDPOINT=http://jaeger:14268/api/traces
+    volumes:
+      - redquanta_vol:/opt/redquanta/vol
+      - redquanta_logs:/app/logs
+      - redquanta_config:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - redquanta_net
+    depends_on:
+      - jaeger
+    restart: unless-stopped
+    cap_drop:
+      - ALL
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp:noexec,nosuid,size=100m
+
+  # OpenTelemetry tracing
+  jaeger:
+    image: jaegertracing/all-in-one:1.50
+    container_name: redquanta-jaeger
+    ports:
+      - "16686:16686"
+      - "14268:14268"
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    networks:
+      - redquanta_net
+    restart: unless-stopped
+
+  # Tool fallback containers
+  nmap-fallback:
+    image: instrumentisto/nmap:latest
+    container_name: redquanta-nmap-fallback
+    networks:
+      - redquanta_net
+    command: ["tail", "-f", "/dev/null"]
+    restart: unless-stopped
+
+  masscan-fallback:
+    image: ivre/masscan:latest
+    container_name: redquanta-masscan-fallback
+    networks:
+      - redquanta_net  
+    command: ["tail", "-f", "/dev/null"]
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+
+  zap-fallback:
+    image: owasp/zap2docker-stable:latest
+    container_name: redquanta-zap-fallback
+    ports:
+      - "8090:8090"
+    networks:
+      - redquanta_net
+    command: ["zap.sh", "-daemon", "-host", "0.0.0.0", "-port", "8090", "-config", "api.disablekey=true"]
+    restart: unless-stopped
+
+volumes:
+  redquanta_vol:
+    driver: local
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
+      o: size=1G,uid=1001,gid=1001
+  redquanta_logs:
+    driver: local
+  redquanta_config:
+    driver: local
+
+networks:
+  redquanta_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/24 
