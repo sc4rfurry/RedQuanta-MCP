@@ -2,9 +2,9 @@
   "version": "0.3.0",
   "name": "redquanta-mcp",
   "description": "Cross-platform, security-hardened MCP server for penetration testing orchestration",
-  "author": "RedQuanta Team",
+  "author": "sc4rfurry",
   "license": "MIT",
-  "homepage": "https://github.com/redquanta/redquanta-mcp",
+  "homepage": "https://github.com/sc4rfurry/RedQuanta-MCP",
   "schema_version": "2024-11-05",
   "capabilities": {
     "tools": true,
