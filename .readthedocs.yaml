@@ -14,8 +14,11 @@ build:
       # Install poetry
       - pip install poetry
     pre_build:
+      # Clear any existing poetry cache and lock files
+      - poetry cache clear pypi --all || true
+      - rm -f poetry.lock || true
       # Install dependencies with poetry
-      - poetry install --only docs
+      - poetry install --only docs --no-cache
     post_build:
       # Generate additional documentation
       - npm run build:docs
@@ -24,11 +27,6 @@ build:
 mkdocs:
   configuration: mkdocs.yml
   fail_on_warning: false
-
-# Optionally declare the Python requirements required to build your docs
-python:
-  install:
-    - requirements: docs/requirements.txt
 
 # Set the version of Python and other tools you might need
 formats:
