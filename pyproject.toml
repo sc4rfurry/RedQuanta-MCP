@@ -8,10 +8,9 @@ version = "0.3.0"
 description = "Documentation for RedQuanta MCP"
 authors = ["sc4rfurry <sc4rfurry@redquanta.dev>"]
 readme = "README.md"
-packages = []
-
+packages = []                  
 [tool.poetry.dependencies]
-python = ">=3.7"
+python = ">=3.8,<4"             
 
 [tool.poetry.group.docs]
 optional = true
@@ -19,7 +18,7 @@ optional = true
 [tool.poetry.group.docs.dependencies]
 mkdocs = "^1.5.3"
 mkdocs-material = "^9.4.0"
-mkdocs-git-revision-date-localized-plugin = "^1.2.0"
+mkdocs-git-revision-date-localized-plugin = "^1.2.0"        
 mkdocs-git-committers-plugin-2 = "^1.2.0"
 mkdocs-minify-plugin = "^0.7.0"
 mkdocs-swagger-ui-tag = "^0.6.0"
