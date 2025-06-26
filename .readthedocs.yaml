@@ -1,0 +1,45 @@
+# Read the Docs configuration file for RedQuanta MCP
+# See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
+
+version: 2
+
+# Set the OS, Python version and other tools you might need
+build:
+  os: ubuntu-22.04
+  tools:
+    python: "3.11"
+    nodejs: "20"
+  jobs:
+    pre_create_environment:
+      # Install poetry
+      - pip install poetry
+    pre_build:
+      # Install dependencies with poetry
+      - poetry install --only docs
+    post_build:
+      # Generate additional documentation
+      - npm run build:docs
+
+# Build documentation in the docs/ directory with MkDocs
+mkdocs:
+  configuration: mkdocs.yml
+  fail_on_warning: false
+
+# Optionally declare the Python requirements required to build your docs
+python:
+  install:
+    - requirements: docs/requirements.txt
+
+# Set the version of Python and other tools you might need
+formats:
+  - pdf
+  - epub
+
+# Optional but recommended, declare the Python requirements required to build your documentation
+# See https://docs.readthedocs.io/en/stable/guides/reproducible-builds.html
+search:
+  ranking:
+    'api/': 2
+    'getting-started/': 3
+  ignore:
+    - 'changelog.md' 
