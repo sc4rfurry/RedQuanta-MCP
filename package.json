@@ -74,7 +74,7 @@
     "commander": "^12.1.0",
     "duck-duck-scrape": "^2.2.5",
     "execa": "^9.5.1",
-    "fastify": "^5.1.0",
+    "fastify": "^5.7.3",
     "node-cache": "^5.1.2",
     "node-fetch": "^3.3.2",
     "pino": "^9.5.0",
